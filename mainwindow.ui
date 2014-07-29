@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1349</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>1329</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="textElideMode">
+       <enum>Qt::ElideLeft</enum>
+      </property>
+      <property name="rowCount">
+       <number>1</number>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <row/>
+      <column>
+       <property name="text">
+        <string>Data</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tytuł</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Przelicznik Godzinowy (Praca)</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Godziny (Praca)</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Przelicznik Milażu Refundowanego</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Milaż Refundowany</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Przelicznik Milażu Nierefundowanego</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Milaż Nierefundowany</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Przelicznik  Czasu(Dojazd)</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Czas (Dojazd)</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Suma Czasu</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Dochód</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Przelicznik Taxu Dojazdowego</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tax Dojazdowy</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Inne</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Zysk</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QCheckBox" name="check_data">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>data</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chec_tytul">
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>tytuł</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_przelicznik_godzinowy">
+          <property name="maximumSize">
+           <size>
+            <width>130</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>przelicznik godzinowy</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_godziny">
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>godziny</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_przelicznik_milazu_refundowanego">
+          <property name="maximumSize">
+           <size>
+            <width>180</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>przelicznik milażu refundowanego</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_milaz_refundowany">
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>milaż refundowany</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_przelicznik_milazu_nierefundowanego">
+          <property name="text">
+           <string>przelicznik milażu nierefundowanego</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QCheckBox" name="check_milaz_nierefundowany">
+          <property name="maximumSize">
+           <size>
+            <width>130</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>milaż nierefundowany</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_przelicznik_czasu">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>przelicznik czasu</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_czas">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>czas</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_dochod">
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>suma czasu</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_przelicznik_taxu_dojazdowego">
+          <property name="maximumSize">
+           <size>
+            <width>60</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>dochód</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_tax_dojazdowy">
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>przelicznik taxu dojazdowego</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_inne">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>tax dojazdowy</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_zysk">
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>inne</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_suma_czasu">
+          <property name="text">
+           <string>zysk</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <layout class="QFormLayout" name="formLayout">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Od kiedy</string>
+          </property>
+          <property name="buddy">
+           <cstring>dateEdit_begin</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QDateEdit" name="dateEdit_begin"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Do kiedy</string>
+          </property>
+          <property name="buddy">
+           <cstring>dateEdit_end</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QDateEdit" name="dateEdit_end"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Dodaj wpis</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_4">
+          <property name="text">
+           <string>Aktualizuj</string>
+          </property>
+          <property name="shortcut">
+           <string>Return</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>Usun wpis</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="text">
+           <string>Eksportuj do pdf</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1349</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
