@@ -16,6 +16,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
         QString tablica_nazw[16];//niech bedzie za duzo , nie ma co szukac teraz
+        QVector <bool> row_ready;
 
 
 private slots:
@@ -42,7 +43,13 @@ private slots:
    void sortuj();
 
 
-   void on_tableWidget_cellChanged(int row, int column);
+    void on_tableWidget_cellChanged(int row, int column);
+
+
+
+
+
+    void on_actionO_Qt_triggered();
 
 private:
     Ui::MainWindow *ui;

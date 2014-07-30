@@ -20,6 +20,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -32,6 +33,7 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionO_Qt;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_4;
     QTableWidget *tableWidget;
@@ -67,6 +69,7 @@ public:
     QPushButton *pushButton_2;
     QPushButton *pushButton_3;
     QMenuBar *menuBar;
+    QMenu *menuHELP;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -79,6 +82,12 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
+        MainWindow->setMouseTracking(false);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/obrazki/hajs.jpg"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
+        actionO_Qt = new QAction(MainWindow);
+        actionO_Qt->setObjectName(QStringLiteral("actionO_Qt"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout_4 = new QVBoxLayout(centralWidget);
@@ -319,6 +328,8 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1349, 21));
+        menuHELP = new QMenu(menuBar);
+        menuHELP->setObjectName(QStringLiteral("menuHELP"));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -328,6 +339,9 @@ public:
         label_2->setBuddy(dateEdit_end);
 #endif // QT_NO_SHORTCUT
 
+        menuBar->addAction(menuHELP->menuAction());
+        menuHELP->addAction(actionO_Qt);
+
         retranslateUi(MainWindow);
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -336,6 +350,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        actionO_Qt->setText(QApplication::translate("MainWindow", "O Qt", 0));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("MainWindow", "Data", 0));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
@@ -391,6 +406,7 @@ public:
         pushButton_4->setShortcut(QApplication::translate("MainWindow", "Space", 0));
         pushButton_2->setText(QApplication::translate("MainWindow", "Usun wpis", 0));
         pushButton_3->setText(QApplication::translate("MainWindow", "Eksportuj do pdf", 0));
+        menuHELP->setTitle(QApplication::translate("MainWindow", "HELP", 0));
     } // retranslateUi
 
 };

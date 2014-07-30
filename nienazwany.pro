@@ -23,3 +23,6 @@ HEADERS  += mainwindow.h \
     pugixml.hpp
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    images.qrc

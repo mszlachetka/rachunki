@@ -16,8 +16,15 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/obrazki/hajs.jpg</normaloff>:/obrazki/hajs.jpg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -431,10 +438,24 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHELP">
+    <property name="title">
+     <string>HELP</string>
+    </property>
+    <addaction name="actionO_Qt"/>
+   </widget>
+   <addaction name="menuHELP"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionO_Qt">
+   <property name="text">
+    <string>O Qt</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>
