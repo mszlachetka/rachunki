@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+        QString tablica_nazw[16];//niech bedzie za duzo , nie ma co szukac teraz
 
 
 private slots:
@@ -24,9 +25,10 @@ private slots:
    void on_pushButton_2_clicked();
 
    void init_table();
+    void init_tablica_nazw();
 
-
-
+    void zapisz(QString nazwa);
+    void wczytaj();
 
    void on_pushButton_3_clicked();
 
@@ -37,6 +39,10 @@ private slots:
    void init_last_row();
    void aktualizuj_razem();
 
+   void sortuj();
+
+
+   void on_tableWidget_cellChanged(int row, int column);
 
 private:
     Ui::MainWindow *ui;

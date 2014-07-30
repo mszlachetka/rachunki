@@ -14,9 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    rekord.cpp
+    rekord.cpp \
+    pugixml.cpp
 
 HEADERS  += mainwindow.h \
-    rekord.h
+    rekord.h \
+    pugiconfig.hpp \
+    pugixml.hpp
 
 FORMS    += mainwindow.ui

@@ -394,7 +394,7 @@
            <string>Aktualizuj</string>
           </property>
           <property name="shortcut">
-           <string>Return</string>
+           <string>Space</string>
           </property>
          </widget>
         </item>

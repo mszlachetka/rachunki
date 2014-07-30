@@ -14,9 +14,6 @@ class Rekord : public QWidget
 public:
     explicit Rekord(QWidget *parent = 0);
     QDateEdit *mDate=new QDateEdit;
-   //to mniejsze o 1 od tego co w tabie bo najpierw jest data
-
-
 signals:
 
 public slots:
