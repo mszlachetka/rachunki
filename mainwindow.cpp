@@ -6,6 +6,10 @@
 #include "pugiconfig.hpp"
 #include "sstream"
 #include <iostream>
+#include <QPrinter>
+#include <QPainter>
+#include <QTextFormat>
+#include <QTextTable>
 
 
 using namespace pugi;
@@ -20,9 +24,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
     QMainWindow::showMaximized();
 
     init_tablica_nazw();
+    init_short_tablica_nazw();
 
     init_table();
     init_last_row();
@@ -88,6 +94,84 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    QPrinter printer;
+    printer.setOutputFileName(QString::number(ui->dateEdit_begin->date().month())
+                              +"."+QString::number(ui->dateEdit_begin->date().day())
+                              +"."+QString::number(ui->dateEdit_begin->date().year())
+                              +"_"
+                              +QString::number(ui->dateEdit_end->date().month())
+                             +"."+QString::number(ui->dateEdit_end->date().day())
+                             +"."+QString::number(ui->dateEdit_end->date().year())
+                             +".pdf");
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOrientation(QPrinter::Landscape);
+    printer.setPaperSize(QPrinter::A4);
+    printer.newPage();
+   QPainter painter(&printer);
+    //tu wpisac  tresc
+   QPen mPen;
+   mPen.setWidth(2);
+   painter.setPen(mPen);
+   int xpos=50;
+   int ypos=100;
+   int cell_height=20;
+   int cell_width=55;
+   int ile_kolumn;
+   licz_okejki(ile_kolumn);
+
+
+
+
+
+   for(int i=0;i<ile_kolumn;i++)
+       for(int j=0;j<ui->tableWidget->rowCount()-1;j++)
+       {
+
+           if(j==0)
+           {
+                mPen.setWidth(3);
+                painter.setPen(mPen);
+             if(i==0)
+             {
+                 painter.drawRect(xpos+i*cell_width,ypos+j*cell_height,cell_width,cell_height);
+                 painter.drawText(xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,short_tablica_nazw[i]);
+
+             }
+             if(i==1)
+             {
+                 painter.drawRect(xpos+i*cell_width,ypos+j*cell_height,cell_width+30,cell_height);
+                 painter.drawText(xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,short_tablica_nazw[i]);
+
+
+             }
+             if(i>1)
+             {
+                 painter.drawRect(30+xpos+i*cell_width,ypos+j*cell_height,cell_width,cell_height);
+                 painter.drawText(30+xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,short_tablica_nazw[i]);
+
+
+             }
+
+               mPen.setWidth(2);
+               painter.setPen(mPen);
+           }
+           else if(i>1)
+           {
+           painter.drawText(30+xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,ui->tableWidget->item(j,i)->text());
+           painter.drawRect(30+xpos+i*cell_width,ypos+j*cell_height,cell_width,cell_height);
+           }
+           else if(i==0)
+           {
+               painter.drawRect(xpos+i*cell_width,ypos+j*cell_height,cell_width,cell_height);
+           }
+           else if(i==1)
+           {
+               painter.drawText(xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,ui->tableWidget->item(j,i)->text());
+               painter.drawRect(xpos+i*cell_width,ypos+j*cell_height,cell_width+30,cell_height);
+           }
+       }
+
+   painter.end();
 
 }
 
@@ -192,16 +276,17 @@ void MainWindow::on_pushButton_4_clicked()
     ui->tableWidget->item(ui->tableWidget->currentRow(),13)->setText(s_suma_tax);
 
     //razem
-
+    sortuj();
     aktualizuj_razem();
+    if(ui->tableWidget->currentRow()==ui->tableWidget->rowCount()-1) aktualizuj_razem();
 
- /*  for(int i=1;i<16;i++)
+   for(int i=1;i<16;i++)
     {
        if( i!=10 && i!=11 && i!=15 && i!=13)
      {
        ui->tableWidget->item(ui->tableWidget->currentRow(),i)->setBackgroundColor(Qt::white);
        }
-    }*/
+    }
 
 
 
@@ -218,7 +303,6 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::aktualizuj_razem()
 {
 
-    sortuj();
     double suma_godzin_kolumna=0;
     double suma_czasu_kolumna=0;
     double suma_milaz_refundowany=0;
@@ -394,10 +478,31 @@ void MainWindow::init_tablica_nazw()
     tablica_nazw[15]="zysk";
 }
 
+void MainWindow::init_short_tablica_nazw()
+{
+    short_tablica_nazw[0]="date";
+    short_tablica_nazw[1]="t";
+    short_tablica_nazw[2]="p_g";
+    short_tablica_nazw[3]="g";
+    short_tablica_nazw[4]="p_m_r";
+    short_tablica_nazw[5]="m_r";
+    short_tablica_nazw[6]="p_m_n";
+    short_tablica_nazw[7]="m_n";
+    short_tablica_nazw[8]="p_c";
+    short_tablica_nazw[9]="c";
+    short_tablica_nazw[10]="s_c";
+    short_tablica_nazw[11]="d";
+    short_tablica_nazw[12]="p_t_d";
+    short_tablica_nazw[13]="t_d";
+    short_tablica_nazw[14]="i";
+    short_tablica_nazw[15]="z";
+}
+
 void MainWindow::on_tableWidget_cellChanged(int row, int column)
 {
     if(ui->tableWidget->item(row,column)->text().toDouble()<0) ui->tableWidget->item(row,column)->setTextColor(Qt::red);
     else ui->tableWidget->item(row,column)->setTextColor(Qt::black);
+
 }
 
 
@@ -409,3 +514,28 @@ void MainWindow::on_actionO_Qt_triggered()
 {
     QApplication::aboutQt();
 }
+
+
+int MainWindow::licz_okejki(int &i)
+{
+    i=0;
+    if(ui->check_czas->isChecked()) i++;
+    if(ui->check_data->isChecked()) i++;
+    if(ui->check_dochod->isChecked()) i++;
+    if(ui->check_godziny->isChecked()) i++;
+    if(ui->check_inne->isChecked()) i++;
+    if(ui->check_milaz_nierefundowany->isChecked()) i++;
+    if(ui->check_milaz_refundowany->isChecked()) i++;
+    if(ui->check_przelicznik_czasu->isChecked()) i++;
+    if(ui->check_przelicznik_godzinowy->isChecked()) i++;
+    if(ui->check_przelicznik_milazu_nierefundowanego->isChecked()) i++;
+    if(ui->check_przelicznik_milazu_refundowanego->isChecked()) i++;
+    if(ui->check_przelicznik_taxu_dojazdowego->isChecked()) i++;
+    if(ui->check_suma_czasu->isChecked()) i++;
+    if(ui->check_tax_dojazdowy->isChecked()) i++;
+    if(ui->check_zysk->isChecked()) i++;
+    if(ui->chec_tytul->isChecked()) i++;
+
+    return i;
+}
+

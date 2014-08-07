@@ -142,6 +142,7 @@ public:
         tableWidget->setMinimumSize(QSize(1329, 0));
         tableWidget->setAlternatingRowColors(true);
         tableWidget->setTextElideMode(Qt::ElideLeft);
+        tableWidget->setSortingEnabled(false);
         tableWidget->setRowCount(1);
         tableWidget->horizontalHeader()->setCascadingSectionResizes(true);
 
@@ -294,6 +295,8 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setAutoRepeat(false);
+        pushButton->setAutoRepeatDelay(1);
 
         verticalLayout_2->addWidget(pushButton);
 

@@ -16,6 +16,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
         QString tablica_nazw[16];//niech bedzie za duzo , nie ma co szukac teraz
+        QString short_tablica_nazw[16];
         QVector <bool> row_ready;
 
 
@@ -27,6 +28,9 @@ private slots:
 
    void init_table();
     void init_tablica_nazw();
+    void init_short_tablica_nazw();
+
+    int licz_okejki(int &i);
 
     void zapisz(QString nazwa);
     void wczytaj();
@@ -50,6 +54,7 @@ private slots:
 
 
     void on_actionO_Qt_triggered();
+
 
 private:
     Ui::MainWindow *ui;

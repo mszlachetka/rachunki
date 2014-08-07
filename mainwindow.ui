@@ -51,6 +51,9 @@
       <property name="textElideMode">
        <enum>Qt::ElideLeft</enum>
       </property>
+      <property name="sortingEnabled">
+       <bool>false</bool>
+      </property>
       <property name="rowCount">
        <number>1</number>
       </property>
@@ -392,6 +395,12 @@
          <widget class="QPushButton" name="pushButton">
           <property name="text">
            <string>Dodaj wpis</string>
+          </property>
+          <property name="autoRepeat">
+           <bool>false</bool>
+          </property>
+          <property name="autoRepeatDelay">
+           <number>1</number>
           </property>
          </widget>
         </item>
