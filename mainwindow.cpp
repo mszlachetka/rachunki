@@ -8,8 +8,7 @@
 #include <iostream>
 #include <QPrinter>
 #include <QPainter>
-#include <QTextFormat>
-#include <QTextTable>
+
 
 
 using namespace pugi;
@@ -63,7 +62,7 @@ void MainWindow::on_pushButton_clicked()
             itm->setFlags(itm->flags() ^ Qt::ItemIsEditable);
             itm->setBackgroundColor(Qt::lightGray);
         }
-        ui->tableWidget->setItem(ui->tableWidget->rowCount()-2,i+1,itm);        
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-2,i+1,itm);
     }
     row_ready.push_back(true);
 
@@ -91,89 +90,256 @@ void MainWindow::on_pushButton_2_clicked()
 
 
 
-
 void MainWindow::on_pushButton_3_clicked()
 {
+    // gdzies trzeba wkleic ile_na_stronie++;
     QPrinter printer;
-    printer.setOutputFileName(QString::number(ui->dateEdit_begin->date().month())
-                              +"."+QString::number(ui->dateEdit_begin->date().day())
-                              +"."+QString::number(ui->dateEdit_begin->date().year())
-                              +"_"
-                              +QString::number(ui->dateEdit_end->date().month())
-                             +"."+QString::number(ui->dateEdit_end->date().day())
-                             +"."+QString::number(ui->dateEdit_end->date().year())
-                             +".pdf");
+    printer.setOutputFileName(ui->linia_tytulowa->text()+".pdf");
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOrientation(QPrinter::Landscape);
     printer.setPaperSize(QPrinter::A4);
     printer.newPage();
-   QPainter painter(&printer);
+    QPainter painter(&printer);
     //tu wpisac  tresc
-   QPen mPen;
-   mPen.setWidth(2);
-   painter.setPen(mPen);
-   int xpos=50;
-   int ypos=100;
-   int cell_height=20;
-   int cell_width=55;
-   int ile_kolumn;
-   licz_okejki(ile_kolumn);
+    QPen mPen;
+    mPen.setWidth(2);
+    painter.setPen(mPen);
+    int xpos=50;
+    int ypos=80;
+    int cell_height=20;
+    int cell_width=55;
+    double ile_kolumn;
+    int pominiete=0;
+    int czyzmieniac=1;
+
+    int ile_na_stronie=0;
+    licz_okejki(ile_kolumn);
+
+    //Wstep
+    const QString mTitle=ui->linia_tytulowa->text();
+    painter.drawText(50,30,mTitle);
+
+    double suma_godzin_kolumna=0;
+    double suma_czasu_kolumna=0;
+    double suma_milaz_refundowany=0;
+    double suma_milaz_nierefundowany=0;
+    double suma_dochod_kolumna=0;
+    double suma_zysk_kolumna=0;
+    double suma_godzin_wszystkich=0;
+    double suma_inne=0;
+    double suma_tax=0;
+
+    for(int j=1;j<=ui->tableWidget->rowCount();j++)
+    {
+       czyzmieniac=1;
+        for(int i=0;i<ile_kolumn;i++)
+        {
+            if(j!=ui->tableWidget->rowCount())
+            {
+
+                if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()>=ui->dateEdit_begin->date() )
+                 {
+                     if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()<=ui->dateEdit_end->date() )
+                     {
+
+                if(wybrane_kolumny.at(i)==3) suma_godzin_kolumna+=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                if(wybrane_kolumny.at(i)==5) suma_milaz_refundowany +=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                if(wybrane_kolumny.at(i)==7) suma_milaz_nierefundowany +=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                if(wybrane_kolumny.at(i)==9) suma_czasu_kolumna+=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                if(wybrane_kolumny.at(i)==10) suma_godzin_wszystkich+=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                if(wybrane_kolumny.at(i)==11) suma_dochod_kolumna+=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                if(wybrane_kolumny.at(i)==13) suma_tax+=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                if(wybrane_kolumny.at(i)==14) suma_inne+=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                if(wybrane_kolumny.at(i)==15) suma_zysk_kolumna+=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
+                     }
+                     else if(czyzmieniac==1 )
+                     {
+                         pominiete++;
+                         czyzmieniac=0;
+
+                     }
+                }
+                else if(czyzmieniac==1 && i==0)
+                {
+                    pominiete++;
+                    czyzmieniac=0;
+
+                }
 
 
 
-
-
-   for(int i=0;i<ile_kolumn;i++)
-       for(int j=0;j<ui->tableWidget->rowCount()-1;j++)
-       {
-
-           if(j==0)
-           {
+            if(ile_na_stronie==30)
+            {
+                printer.newPage();
+                pominiete+=30;
+                ile_na_stronie=0;
+            }
+            if(ile_na_stronie==0)
+            {
                 mPen.setWidth(3);
                 painter.setPen(mPen);
-             if(i==0)
-             {
-                 painter.drawRect(xpos+i*cell_width,ypos+j*cell_height,cell_width,cell_height);
-                 painter.drawText(xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,short_tablica_nazw[i]);
+                painter.drawText(50,30,mTitle);
 
-             }
-             if(i==1)
-             {
-                 painter.drawRect(xpos+i*cell_width,ypos+j*cell_height,cell_width+30,cell_height);
-                 painter.drawText(xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,short_tablica_nazw[i]);
-
-
-             }
-             if(i>1)
-             {
-                 painter.drawRect(30+xpos+i*cell_width,ypos+j*cell_height,cell_width,cell_height);
-                 painter.drawText(30+xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,short_tablica_nazw[i]);
+                if(i==0)
+                {
+                    painter.drawRect(xpos+i*cell_width,ypos+(j-pominiete)*cell_height,cell_width,cell_height);
+                    painter.drawText(xpos+i*cell_width+5,ypos+(j+1-pominiete)*cell_height-5,wybrane_short_tablica_nazw[i]);
+                }
+                if(i==1)
+                {
+                    painter.drawRect(xpos+i*cell_width,ypos+(j-pominiete)*cell_height,cell_width+30,cell_height);
+                    painter.drawText(xpos+i*cell_width+5,ypos+(j+1-pominiete)*cell_height-5,wybrane_short_tablica_nazw[i]);
 
 
-             }
 
-               mPen.setWidth(2);
-               painter.setPen(mPen);
-           }
-           else if(i>1)
-           {
-           painter.drawText(30+xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,ui->tableWidget->item(j,i)->text());
-           painter.drawRect(30+xpos+i*cell_width,ypos+j*cell_height,cell_width,cell_height);
-           }
-           else if(i==0)
-           {
-               painter.drawRect(xpos+i*cell_width,ypos+j*cell_height,cell_width,cell_height);
-           }
-           else if(i==1)
-           {
-               painter.drawText(xpos+i*cell_width+5,ypos+(j+1)*cell_height-5,ui->tableWidget->item(j,i)->text());
-               painter.drawRect(xpos+i*cell_width,ypos+j*cell_height,cell_width+30,cell_height);
-           }
-       }
+                }
+                if(i>1)
+                {
+                    painter.drawRect(30+xpos+i*cell_width,ypos+(j-pominiete)*cell_height,cell_width,cell_height);
+                    painter.drawText(30+xpos+i*cell_width+5,ypos+(j+1-pominiete)*cell_height-5,wybrane_short_tablica_nazw[i]);               
+                }
 
-   painter.end();
+                QString description_1;
+                QString description_2;
+                for(int k=0;k<16;k++)
+                {
+                    if(k==0){}
+                    else if (k>0 && k<8) description_1+=short_tablica_nazw[k]+"  =  "+tablica_nazw[k]+"     ";
+                    else  description_2+=short_tablica_nazw[k]+"  =  "+tablica_nazw[k]+"       ";
+                }
+                painter.drawText(50,50,description_1);
+                painter.drawText(50,70,description_2);
 
+
+                mPen.setWidth(2);
+                painter.setPen(mPen);
+
+               if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()>=ui->dateEdit_begin->date() )
+                {
+                    if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()<=ui->dateEdit_end->date() )
+                    {
+                        if(j==0)
+                        {
+
+                        }
+                        else if(i>1)
+                        {
+                            painter.drawText(30+xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
+                            painter.drawRect(30+xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+
+                        }
+                        else if(wybrane_kolumny.at(i)==0)
+                        {
+                            painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+                            painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,
+                                             QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().day())+"."+
+                                             QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().month())+"."+
+                                             QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().year()-2000));
+
+                        }
+                        else if(i==1)
+                        {
+                            painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
+                            painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width+30,cell_height);
+                        }
+
+                    }
+
+
+
+                }
+
+
+    if(i==ile_kolumn-1) ile_na_stronie++;
+            }
+            else if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()>=ui->dateEdit_begin->date() )
+            {
+                if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()<=ui->dateEdit_end->date() )
+                {
+                    if(j==0)
+                    {
+
+                    }
+                    else if(i>1)
+                    {
+                        painter.drawText(30+xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
+                        painter.drawRect(30+xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+
+                    }
+                    else if(wybrane_kolumny.at(i)==0)
+                    {
+                        painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+                        painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,
+                                         QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().day())+"."+
+                                         QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().month())+"."+
+                                         QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().year()-2000));
+
+                    }
+                    else if(i==1)
+                    {
+                        painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
+                        painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width+30,cell_height);
+                    }
+                }
+
+
+
+              if(i==ile_kolumn-1)  ile_na_stronie++;
+
+            }
+
+
+        }
+         else
+            {
+               if(i==0)
+                {
+                painter.drawText(xpos+i*cell_width+2,ypos+(j+2-pominiete)*cell_height-5,"SUMMARY");
+                painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+               }
+               else if(i==1)
+                {
+                   QString tresc;
+                   if(wybrane_kolumny.at(i)==3) tresc=QString::number(suma_godzin_kolumna);
+                   if(wybrane_kolumny.at(i)==5) tresc=QString::number(suma_milaz_refundowany);
+                   if(wybrane_kolumny.at(i)==7) tresc=QString::number(suma_milaz_nierefundowany) ;
+                   if(wybrane_kolumny.at(i)==9) tresc=QString::number(suma_czasu_kolumna);
+                   if(wybrane_kolumny.at(i)==10) tresc=QString::number(suma_godzin_wszystkich);
+                   if(wybrane_kolumny.at(i)==11) tresc=QString::number(suma_dochod_kolumna);
+                   if(wybrane_kolumny.at(i)==13) tresc=QString::number(suma_tax);
+                   if(wybrane_kolumny.at(i)==14) tresc=QString::number(suma_inne);
+                   if(wybrane_kolumny.at(i)==15) tresc=QString::number(suma_zysk_kolumna);
+                painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,tresc);
+                painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width+30,cell_height);
+               }
+               else if(i>1)
+               {
+                   QString tresc;
+                   if(wybrane_kolumny.at(i)==3) tresc=QString::number(suma_godzin_kolumna);
+                   if(wybrane_kolumny.at(i)==5) tresc=QString::number(suma_milaz_refundowany);
+                   if(wybrane_kolumny.at(i)==7) tresc=QString::number(suma_milaz_nierefundowany) ;
+                   if(wybrane_kolumny.at(i)==9) tresc=QString::number(suma_czasu_kolumna);
+                   if(wybrane_kolumny.at(i)==10) tresc=QString::number(suma_godzin_wszystkich);
+                   if(wybrane_kolumny.at(i)==11) tresc=QString::number(suma_dochod_kolumna);
+                   if(wybrane_kolumny.at(i)==13) tresc=QString::number(suma_tax);
+                   if(wybrane_kolumny.at(i)==14) tresc=QString::number(suma_inne);
+                   if(wybrane_kolumny.at(i)==15) tresc=QString::number(suma_zysk_kolumna);
+                   painter.drawText(30+xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,tresc);
+                   painter.drawRect(30+xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+               }
+
+            }
+
+    }
+
+    }
+    painter.end();
 }
+
+
+
+
+
 
 void MainWindow::init_table()
 {
@@ -243,6 +409,7 @@ void MainWindow::on_pushButton_4_clicked()
 
 
 
+
     QString s_suma_godzin;
     suma_godzin=ui->tableWidget->item(ui->tableWidget->currentRow(),3)->text().toDouble()
             +ui->tableWidget->item(ui->tableWidget->currentRow(),9)->text().toDouble();
@@ -280,13 +447,7 @@ void MainWindow::on_pushButton_4_clicked()
     aktualizuj_razem();
     if(ui->tableWidget->currentRow()==ui->tableWidget->rowCount()-1) aktualizuj_razem();
 
-   for(int i=1;i<16;i++)
-    {
-       if( i!=10 && i!=11 && i!=15 && i!=13)
-     {
-       ui->tableWidget->item(ui->tableWidget->currentRow(),i)->setBackgroundColor(Qt::white);
-       }
-    }
+
 
 
 
@@ -313,8 +474,17 @@ void MainWindow::aktualizuj_razem()
     double suma_inne=0;
     double suma_tax=0;
 
+    for(int i=1;i<16;i++)
+    {
+        if(row_ready.at(ui->tableWidget->currentRow()) && (ui->tableWidget->item(ui->tableWidget->currentRow(),i)->text().isNull() ||
+         ui->tableWidget->item(ui->tableWidget->currentRow(),i)->text().isEmpty()) ) ui->tableWidget->item(ui->tableWidget->currentRow(),i)->setText("0");
+    }
+
     for(int j=0;j<ui->tableWidget->rowCount()-1;j++)
     {
+
+
+
         ui->tableWidget->item(ui->tableWidget->rowCount()-1,3)
                 ->setText(QString::number(suma_godzin_kolumna+=ui->tableWidget->item(j,3)->text().toDouble()));
 
@@ -461,41 +631,42 @@ void MainWindow::wczytaj()
 
 void MainWindow::init_tablica_nazw()
 {
-    tablica_nazw[1]="tytul";
-    tablica_nazw[2]="przelicznik_godzinowy";
-    tablica_nazw[3]="godziny";
-    tablica_nazw[4]="przelicznik_milazu_refundowanego";
-    tablica_nazw[5]="milaz_refundowany";
-    tablica_nazw[6]="przelicznik_milazu_niereundowanego";
-    tablica_nazw[7]="milaz_nierefundowany";
-    tablica_nazw[8]="przelicznik_czasu";
-    tablica_nazw[9]="czas";
-    tablica_nazw[10]="suma_czasu";
-    tablica_nazw[11]="dochod";
-    tablica_nazw[12]="przelicznik_taxu_dojazdowego";
-    tablica_nazw[13]="tax_dojazdowy";
-    tablica_nazw[14]="inne";
-    tablica_nazw[15]="zysk";
+    tablica_nazw[0]="";
+    tablica_nazw[1]="title";
+    tablica_nazw[2]="job_hourly_rate";
+    tablica_nazw[3]="job_hours";
+    tablica_nazw[4]="rechargable_milage_rate";
+    tablica_nazw[5]="rechargable_milage";
+    tablica_nazw[6]="non_rechargable_milage_rate";
+    tablica_nazw[7]="non_rechargable_milage";
+    tablica_nazw[8]="commuting_rate";
+    tablica_nazw[9]="commuting_hours";
+    tablica_nazw[10]="hours_total";
+    tablica_nazw[11]="income";
+    tablica_nazw[12]="milage_allowance_rate";
+    tablica_nazw[13]="milage_allowance";
+    tablica_nazw[14]="others";
+    tablica_nazw[15]="gain";
 }
 
 void MainWindow::init_short_tablica_nazw()
 {
     short_tablica_nazw[0]="date";
-    short_tablica_nazw[1]="t";
-    short_tablica_nazw[2]="p_g";
-    short_tablica_nazw[3]="g";
-    short_tablica_nazw[4]="p_m_r";
-    short_tablica_nazw[5]="m_r";
-    short_tablica_nazw[6]="p_m_n";
-    short_tablica_nazw[7]="m_n";
-    short_tablica_nazw[8]="p_c";
-    short_tablica_nazw[9]="c";
-    short_tablica_nazw[10]="s_c";
-    short_tablica_nazw[11]="d";
-    short_tablica_nazw[12]="p_t_d";
-    short_tablica_nazw[13]="t_d";
-    short_tablica_nazw[14]="i";
-    short_tablica_nazw[15]="z";
+    short_tablica_nazw[1]="T";
+    short_tablica_nazw[2]="JHR";
+    short_tablica_nazw[3]="JH";
+    short_tablica_nazw[4]="RMR";
+    short_tablica_nazw[5]="RM";
+    short_tablica_nazw[6]="NRMR";
+    short_tablica_nazw[7]="NRM";
+    short_tablica_nazw[8]="CR";
+    short_tablica_nazw[9]="CH";
+    short_tablica_nazw[10]="HT";
+    short_tablica_nazw[11]="INC";
+    short_tablica_nazw[12]="MAR";
+    short_tablica_nazw[13]="MA";
+    short_tablica_nazw[14]="O";
+    short_tablica_nazw[15]="G";
 }
 
 void MainWindow::on_tableWidget_cellChanged(int row, int column)
@@ -516,25 +687,129 @@ void MainWindow::on_actionO_Qt_triggered()
 }
 
 
-int MainWindow::licz_okejki(int &i)
+int MainWindow::licz_okejki(double &i)
 {
     i=0;
-    if(ui->check_czas->isChecked()) i++;
-    if(ui->check_data->isChecked()) i++;
-    if(ui->check_dochod->isChecked()) i++;
-    if(ui->check_godziny->isChecked()) i++;
-    if(ui->check_inne->isChecked()) i++;
-    if(ui->check_milaz_nierefundowany->isChecked()) i++;
-    if(ui->check_milaz_refundowany->isChecked()) i++;
-    if(ui->check_przelicznik_czasu->isChecked()) i++;
-    if(ui->check_przelicznik_godzinowy->isChecked()) i++;
-    if(ui->check_przelicznik_milazu_nierefundowanego->isChecked()) i++;
-    if(ui->check_przelicznik_milazu_refundowanego->isChecked()) i++;
-    if(ui->check_przelicznik_taxu_dojazdowego->isChecked()) i++;
-    if(ui->check_suma_czasu->isChecked()) i++;
-    if(ui->check_tax_dojazdowy->isChecked()) i++;
-    if(ui->check_zysk->isChecked()) i++;
-    if(ui->chec_tytul->isChecked()) i++;
+
+    wybrane_kolumny.clear();
+    wybrane_short_tablica_nazw.clear();
+
+    if(ui->check_data->isChecked())//
+    {
+        i++;
+        wybrane_kolumny.push_back(0);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[0]);
+    }
+    if(ui->chec_tytul->isChecked())//
+    {
+        i++;
+        wybrane_kolumny.push_back(1);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[1]);
+    }
+    if(ui->check_przelicznik_godzinowy->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(2);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[2]);
+
+
+    }
+    if(ui->check_godziny->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(3);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[3]);
+
+
+    }
+    if(ui->check_przelicznik_milazu_refundowanego->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(4);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[4]);
+
+
+    }
+    if(ui->check_milaz_refundowany->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(5);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[5]);
+
+
+    }
+
+
+    if(ui->check_przelicznik_milazu_nierefundowanego->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(6);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[6]);
+
+
+    }
+    if(ui->check_milaz_nierefundowany->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(7);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[7]);
+
+
+    }
+    if(ui->check_przelicznik_czasu->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(8);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[8]);
+
+
+    }
+
+    if(ui->check_czas->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(9);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[9]);
+    }
+    if(ui->check_suma_czasu->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(10);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[10]);
+    }
+    if(ui->check_dochod->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(11);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[11]);
+    }
+    if(ui->check_przelicznik_taxu_dojazdowego->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(12);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[12]);
+    }
+    if(ui->check_tax_dojazdowy->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(13);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[13]);
+    }
+    if(ui->check_inne->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(14);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[14]);
+
+
+    }
+    if(ui->check_zysk->isChecked())
+    {
+        i++;
+        wybrane_kolumny.push_back(15);
+        wybrane_short_tablica_nazw.push_back(short_tablica_nazw[15]);
+    }
+
 
     return i;
 }

@@ -17,6 +17,8 @@ public:
     ~MainWindow();
         QString tablica_nazw[16];//niech bedzie za duzo , nie ma co szukac teraz
         QString short_tablica_nazw[16];
+        QVector <int> wybrane_kolumny;
+        QVector <QString> wybrane_short_tablica_nazw;
         QVector <bool> row_ready;
 
 
@@ -30,7 +32,7 @@ private slots:
     void init_tablica_nazw();
     void init_short_tablica_nazw();
 
-    int licz_okejki(int &i);
+    int licz_okejki(double &i);
 
     void zapisz(QString nazwa);
     void wczytaj();

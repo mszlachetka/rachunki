@@ -16,9 +16,11 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDateEdit>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -35,7 +37,7 @@ class Ui_MainWindow
 public:
     QAction *actionO_Qt;
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout_4;
+    QGridLayout *gridLayout;
     QTableWidget *tableWidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
@@ -50,12 +52,12 @@ public:
     QCheckBox *check_milaz_nierefundowany;
     QCheckBox *check_przelicznik_czasu;
     QCheckBox *check_czas;
+    QCheckBox *check_suma_czasu;
     QCheckBox *check_dochod;
     QCheckBox *check_przelicznik_taxu_dojazdowego;
     QCheckBox *check_tax_dojazdowy;
     QCheckBox *check_inne;
     QCheckBox *check_zysk;
-    QCheckBox *check_suma_czasu;
     QHBoxLayout *horizontalLayout_3;
     QFormLayout *formLayout;
     QLabel *label;
@@ -68,6 +70,8 @@ public:
     QVBoxLayout *verticalLayout_3;
     QPushButton *pushButton_2;
     QPushButton *pushButton_3;
+    QLabel *label_3;
+    QLineEdit *linia_tytulowa;
     QMenuBar *menuBar;
     QMenu *menuHELP;
     QStatusBar *statusBar;
@@ -90,10 +94,10 @@ public:
         actionO_Qt->setObjectName(QStringLiteral("actionO_Qt"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        verticalLayout_4 = new QVBoxLayout(centralWidget);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        gridLayout = new QGridLayout(centralWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         tableWidget = new QTableWidget(centralWidget);
         if (tableWidget->columnCount() < 16)
             tableWidget->setColumnCount(16);
@@ -146,7 +150,7 @@ public:
         tableWidget->setRowCount(1);
         tableWidget->horizontalHeader()->setCascadingSectionResizes(true);
 
-        verticalLayout_4->addWidget(tableWidget);
+        gridLayout->addWidget(tableWidget, 0, 0, 1, 2);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
@@ -219,46 +223,46 @@ public:
 
         horizontalLayout_2->addWidget(check_czas);
 
+        check_suma_czasu = new QCheckBox(centralWidget);
+        check_suma_czasu->setObjectName(QStringLiteral("check_suma_czasu"));
+        check_suma_czasu->setMaximumSize(QSize(80, 16777215));
+
+        horizontalLayout_2->addWidget(check_suma_czasu);
+
         check_dochod = new QCheckBox(centralWidget);
         check_dochod->setObjectName(QStringLiteral("check_dochod"));
-        check_dochod->setMaximumSize(QSize(80, 16777215));
+        check_dochod->setMaximumSize(QSize(60, 16777215));
 
         horizontalLayout_2->addWidget(check_dochod);
 
         check_przelicznik_taxu_dojazdowego = new QCheckBox(centralWidget);
         check_przelicznik_taxu_dojazdowego->setObjectName(QStringLiteral("check_przelicznik_taxu_dojazdowego"));
-        check_przelicznik_taxu_dojazdowego->setMaximumSize(QSize(60, 16777215));
+        check_przelicznik_taxu_dojazdowego->setMaximumSize(QSize(160, 16777215));
 
         horizontalLayout_2->addWidget(check_przelicznik_taxu_dojazdowego);
 
         check_tax_dojazdowy = new QCheckBox(centralWidget);
         check_tax_dojazdowy->setObjectName(QStringLiteral("check_tax_dojazdowy"));
-        check_tax_dojazdowy->setMaximumSize(QSize(160, 16777215));
+        check_tax_dojazdowy->setMaximumSize(QSize(100, 16777215));
 
         horizontalLayout_2->addWidget(check_tax_dojazdowy);
 
         check_inne = new QCheckBox(centralWidget);
         check_inne->setObjectName(QStringLiteral("check_inne"));
-        check_inne->setMaximumSize(QSize(100, 16777215));
+        check_inne->setMaximumSize(QSize(50, 16777215));
 
         horizontalLayout_2->addWidget(check_inne);
 
         check_zysk = new QCheckBox(centralWidget);
         check_zysk->setObjectName(QStringLiteral("check_zysk"));
-        check_zysk->setMaximumSize(QSize(50, 16777215));
 
         horizontalLayout_2->addWidget(check_zysk);
-
-        check_suma_czasu = new QCheckBox(centralWidget);
-        check_suma_czasu->setObjectName(QStringLiteral("check_suma_czasu"));
-
-        horizontalLayout_2->addWidget(check_suma_czasu);
 
 
         verticalLayout->addLayout(horizontalLayout_2);
 
 
-        verticalLayout_4->addLayout(verticalLayout);
+        gridLayout->addLayout(verticalLayout, 1, 0, 1, 2);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
@@ -325,7 +329,17 @@ public:
         horizontalLayout_3->addLayout(verticalLayout_3);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_3);
+        gridLayout->addLayout(horizontalLayout_3, 2, 0, 1, 2);
+
+        label_3 = new QLabel(centralWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        gridLayout->addWidget(label_3, 3, 0, 1, 1);
+
+        linia_tytulowa = new QLineEdit(centralWidget);
+        linia_tytulowa->setObjectName(QStringLiteral("linia_tytulowa"));
+
+        gridLayout->addWidget(linia_tytulowa, 3, 1, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -340,6 +354,7 @@ public:
 #ifndef QT_NO_SHORTCUT
         label->setBuddy(dateEdit_begin);
         label_2->setBuddy(dateEdit_end);
+        label_3->setBuddy(linia_tytulowa);
 #endif // QT_NO_SHORTCUT
 
         menuBar->addAction(menuHELP->menuAction());
@@ -396,12 +411,12 @@ public:
         check_milaz_nierefundowany->setText(QApplication::translate("MainWindow", "mila\305\274 nierefundowany", 0));
         check_przelicznik_czasu->setText(QApplication::translate("MainWindow", "przelicznik czasu", 0));
         check_czas->setText(QApplication::translate("MainWindow", "czas", 0));
-        check_dochod->setText(QApplication::translate("MainWindow", "suma czasu", 0));
-        check_przelicznik_taxu_dojazdowego->setText(QApplication::translate("MainWindow", "doch\303\263d", 0));
-        check_tax_dojazdowy->setText(QApplication::translate("MainWindow", "przelicznik taxu dojazdowego", 0));
-        check_inne->setText(QApplication::translate("MainWindow", "tax dojazdowy", 0));
-        check_zysk->setText(QApplication::translate("MainWindow", "inne", 0));
-        check_suma_czasu->setText(QApplication::translate("MainWindow", "zysk", 0));
+        check_suma_czasu->setText(QApplication::translate("MainWindow", "suma czasu", 0));
+        check_dochod->setText(QApplication::translate("MainWindow", "doch\303\263d", 0));
+        check_przelicznik_taxu_dojazdowego->setText(QApplication::translate("MainWindow", "przelicznik taxu dojazdowego", 0));
+        check_tax_dojazdowy->setText(QApplication::translate("MainWindow", "tax dojazdowy", 0));
+        check_inne->setText(QApplication::translate("MainWindow", "inne", 0));
+        check_zysk->setText(QApplication::translate("MainWindow", "zysk", 0));
         label->setText(QApplication::translate("MainWindow", "Od kiedy", 0));
         label_2->setText(QApplication::translate("MainWindow", "Do kiedy", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Dodaj wpis", 0));
@@ -409,6 +424,7 @@ public:
         pushButton_4->setShortcut(QApplication::translate("MainWindow", "Space", 0));
         pushButton_2->setText(QApplication::translate("MainWindow", "Usun wpis", 0));
         pushButton_3->setText(QApplication::translate("MainWindow", "Eksportuj do pdf", 0));
+        label_3->setText(QApplication::translate("MainWindow", "Nag\305\202\303\263wek pliku pdf", 0));
         menuHELP->setTitle(QApplication::translate("MainWindow", "HELP", 0));
     } // retranslateUi
 
