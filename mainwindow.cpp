@@ -105,11 +105,11 @@ void MainWindow::on_pushButton_3_clicked()
     mPen.setWidth(2);
     painter.setPen(mPen);
     int xpos=50;
-    int ypos=80;
+    int ypos=100;
     int cell_height=20;
     int cell_width=55;
     double ile_kolumn;
-    int pominiete=0;
+
     int czyzmieniac=1;
 
     int ile_na_stronie=0;
@@ -154,14 +154,12 @@ void MainWindow::on_pushButton_3_clicked()
                      }
                      else if(czyzmieniac==1 )
                      {
-                         pominiete++;
                          czyzmieniac=0;
 
                      }
                 }
                 else if(czyzmieniac==1 && i==0)
                 {
-                    pominiete++;
                     czyzmieniac=0;
 
                 }
@@ -171,7 +169,6 @@ void MainWindow::on_pushButton_3_clicked()
             if(ile_na_stronie==30)
             {
                 printer.newPage();
-                pominiete+=30;
                 ile_na_stronie=0;
             }
             if(ile_na_stronie==0)
@@ -182,21 +179,21 @@ void MainWindow::on_pushButton_3_clicked()
 
                 if(i==0)
                 {
-                    painter.drawRect(xpos+i*cell_width,ypos+(j-pominiete)*cell_height,cell_width,cell_height);
-                    painter.drawText(xpos+i*cell_width+5,ypos+(j+1-pominiete)*cell_height-5,wybrane_short_tablica_nazw[i]);
+                    painter.drawRect(xpos+i*cell_width,ypos+(ile_na_stronie)*cell_height,cell_width,cell_height);
+                    painter.drawText(xpos+i*cell_width+5,ypos+(1+ile_na_stronie)*cell_height-5,wybrane_short_tablica_nazw[i]);
                 }
                 if(i==1)
                 {
-                    painter.drawRect(xpos+i*cell_width,ypos+(j-pominiete)*cell_height,cell_width+30,cell_height);
-                    painter.drawText(xpos+i*cell_width+5,ypos+(j+1-pominiete)*cell_height-5,wybrane_short_tablica_nazw[i]);
+                    painter.drawRect(xpos+i*cell_width,ypos+(ile_na_stronie)*cell_height,cell_width+30,cell_height);
+                    painter.drawText(xpos+i*cell_width+5,ypos+(1+ile_na_stronie)*cell_height-5,wybrane_short_tablica_nazw[i]);
 
 
 
                 }
                 if(i>1)
                 {
-                    painter.drawRect(30+xpos+i*cell_width,ypos+(j-pominiete)*cell_height,cell_width,cell_height);
-                    painter.drawText(30+xpos+i*cell_width+5,ypos+(j+1-pominiete)*cell_height-5,wybrane_short_tablica_nazw[i]);               
+                    painter.drawRect(30+xpos+i*cell_width,ypos+(ile_na_stronie)*cell_height,cell_width,cell_height);
+                    painter.drawText(30+xpos+i*cell_width+5,ypos+(1+ile_na_stronie)*cell_height-5,wybrane_short_tablica_nazw[i]);
                 }
 
                 QString description_1;
@@ -224,14 +221,14 @@ void MainWindow::on_pushButton_3_clicked()
                         }
                         else if(i>1)
                         {
-                            painter.drawText(30+xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
-                            painter.drawRect(30+xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+                            painter.drawText(30+xpos+i*cell_width+5,ypos+(2+ile_na_stronie)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
+                            painter.drawRect(30+xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
 
                         }
                         else if(wybrane_kolumny.at(i)==0)
                         {
-                            painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
-                            painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,
+                            painter.drawRect(xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
+                            painter.drawText(xpos+i*cell_width+5,ypos+(2+ile_na_stronie)*cell_height-5,
                                              QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().day())+"."+
                                              QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().month())+"."+
                                              QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().year()-2000));
@@ -239,10 +236,10 @@ void MainWindow::on_pushButton_3_clicked()
                         }
                         else if(i==1)
                         {
-                            painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
-                            painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width+30,cell_height);
+                            painter.drawText(xpos+i*cell_width+5,ypos+(2+ile_na_stronie)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
+                            painter.drawRect(xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width+30,cell_height);
                         }
-
+                     if(i==ile_kolumn-1) ile_na_stronie++;
                     }
 
 
@@ -250,7 +247,7 @@ void MainWindow::on_pushButton_3_clicked()
                 }
 
 
-    if(i==ile_kolumn-1) ile_na_stronie++;
+
             }
             else if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()>=ui->dateEdit_begin->date() )
             {
@@ -262,14 +259,14 @@ void MainWindow::on_pushButton_3_clicked()
                     }
                     else if(i>1)
                     {
-                        painter.drawText(30+xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
-                        painter.drawRect(30+xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+                        painter.drawText(30+xpos+i*cell_width+5,ypos+(2+ile_na_stronie)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
+                        painter.drawRect(30+xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
 
                     }
                     else if(wybrane_kolumny.at(i)==0)
                     {
-                        painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
-                        painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,
+                        painter.drawRect(xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
+                        painter.drawText(xpos+i*cell_width+5,ypos+(2+ile_na_stronie)*cell_height-5,
                                          QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().day())+"."+
                                          QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().month())+"."+
                                          QString::number(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,i))->date().year()-2000));
@@ -277,14 +274,14 @@ void MainWindow::on_pushButton_3_clicked()
                     }
                     else if(i==1)
                     {
-                        painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
-                        painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width+30,cell_height);
+                        painter.drawText(xpos+i*cell_width+5,ypos+(2+ile_na_stronie)*cell_height-5,ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text());
+                        painter.drawRect(xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width+30,cell_height);
                     }
+                     if(i==ile_kolumn-1)  ile_na_stronie++;
                 }
 
 
 
-              if(i==ile_kolumn-1)  ile_na_stronie++;
 
             }
 
@@ -294,8 +291,8 @@ void MainWindow::on_pushButton_3_clicked()
             {
                if(i==0)
                 {
-                painter.drawText(xpos+i*cell_width+2,ypos+(j+2-pominiete)*cell_height-5,"SUMMARY");
-                painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+                painter.drawText(xpos+i*cell_width+2,ypos+(2+ile_na_stronie)*cell_height-5,"SUMMARY");
+                painter.drawRect(xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
                }
                else if(i==1)
                 {
@@ -309,8 +306,8 @@ void MainWindow::on_pushButton_3_clicked()
                    if(wybrane_kolumny.at(i)==13) tresc=QString::number(suma_tax);
                    if(wybrane_kolumny.at(i)==14) tresc=QString::number(suma_inne);
                    if(wybrane_kolumny.at(i)==15) tresc=QString::number(suma_zysk_kolumna);
-                painter.drawText(xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,tresc);
-                painter.drawRect(xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width+30,cell_height);
+                painter.drawText(xpos+i*cell_width+5,ypos+(2+ile_na_stronie)*cell_height-5,tresc);
+                painter.drawRect(xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width+30,cell_height);
                }
                else if(i>1)
                {
@@ -324,8 +321,8 @@ void MainWindow::on_pushButton_3_clicked()
                    if(wybrane_kolumny.at(i)==13) tresc=QString::number(suma_tax);
                    if(wybrane_kolumny.at(i)==14) tresc=QString::number(suma_inne);
                    if(wybrane_kolumny.at(i)==15) tresc=QString::number(suma_zysk_kolumna);
-                   painter.drawText(30+xpos+i*cell_width+5,ypos+(j+2-pominiete)*cell_height-5,tresc);
-                   painter.drawRect(30+xpos+i*cell_width,ypos+(j+1-pominiete)*cell_height,cell_width,cell_height);
+                   painter.drawText(30+xpos+i*cell_width+5,ypos+(2+ile_na_stronie)*cell_height-5,tresc);
+                   painter.drawRect(30+xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
                }
 
             }
