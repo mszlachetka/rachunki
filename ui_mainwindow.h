@@ -106,7 +106,10 @@ public:
         tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         tableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QFont font;
+        font.setKerning(false);
         QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        __qtablewidgetitem2->setFont(font);
         tableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         tableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
@@ -386,7 +389,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem7 = tableWidget->horizontalHeaderItem(7);
         ___qtablewidgetitem7->setText(QApplication::translate("MainWindow", "Mila\305\274 Nierefundowany", 0));
         QTableWidgetItem *___qtablewidgetitem8 = tableWidget->horizontalHeaderItem(8);
-        ___qtablewidgetitem8->setText(QApplication::translate("MainWindow", "Przelicznik  Czasu(Dojazd)", 0));
+        ___qtablewidgetitem8->setText(QApplication::translate("MainWindow", "Przelicznik  Czasu (Dojazd)", 0));
         QTableWidgetItem *___qtablewidgetitem9 = tableWidget->horizontalHeaderItem(9);
         ___qtablewidgetitem9->setText(QApplication::translate("MainWindow", "Czas (Dojazd)", 0));
         QTableWidgetItem *___qtablewidgetitem10 = tableWidget->horizontalHeaderItem(10);

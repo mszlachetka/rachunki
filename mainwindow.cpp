@@ -8,6 +8,7 @@
 #include <iostream>
 #include <QPrinter>
 #include <QPainter>
+#include <QDir>
 
 
 
@@ -94,6 +95,8 @@ void MainWindow::on_pushButton_3_clicked()
 {
     // gdzies trzeba wkleic ile_na_stronie++;
     QPrinter printer;
+
+
     printer.setOutputFileName(ui->linia_tytulowa->text()+".pdf");
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOrientation(QPrinter::Landscape);
@@ -101,6 +104,9 @@ void MainWindow::on_pushButton_3_clicked()
     printer.newPage();
     QPainter painter(&printer);
     //tu wpisac  tresc
+
+    QFont mFont;
+
     QPen mPen;
     mPen.setWidth(2);
     painter.setPen(mPen);
@@ -116,8 +122,12 @@ void MainWindow::on_pushButton_3_clicked()
     licz_okejki(ile_kolumn);
 
     //Wstep
+    mFont.setPixelSize(15);
+    painter.setFont(mFont);
     const QString mTitle=ui->linia_tytulowa->text();
-    painter.drawText(50,30,mTitle);
+    painter.drawText(50,25,mTitle);
+    mFont.setPixelSize(11);
+    painter.setFont(mFont);
 
     double suma_godzin_kolumna=0;
     double suma_czasu_kolumna=0;
@@ -128,6 +138,12 @@ void MainWindow::on_pushButton_3_clicked()
     double suma_godzin_wszystkich=0;
     double suma_inne=0;
     double suma_tax=0;
+
+    int site_counter=0;
+        int max_site_counter=0;
+
+        max_site_counter=(((ui->tableWidget->rowCount()+1)-(ui->tableWidget->rowCount()+1)%30))/30;
+        if((ui->tableWidget->rowCount()+2)%30!=0) max_site_counter++;
 
     for(int j=1;j<=ui->tableWidget->rowCount();j++)
     {
@@ -168,14 +184,21 @@ void MainWindow::on_pushButton_3_clicked()
 
             if(ile_na_stronie==30)
             {
+                site_counter++;
+                painter.drawText(xpos+15*cell_width+5,ypos+(3+ile_na_stronie)*cell_height-5,"page "+QString::number(site_counter)
+                                                 +" of "+QString::number(max_site_counter));
                 printer.newPage();
                 ile_na_stronie=0;
             }
             if(ile_na_stronie==0)
             {
                 mPen.setWidth(3);
+                mFont.setPixelSize(15);
+                painter.setFont(mFont);
                 painter.setPen(mPen);
-                painter.drawText(50,30,mTitle);
+                painter.drawText(50,25,mTitle);
+                mFont.setPixelSize(11);
+                painter.setFont(mFont);
 
                 if(i==0)
                 {
@@ -198,17 +221,21 @@ void MainWindow::on_pushButton_3_clicked()
 
                 QString description_1;
                 QString description_2;
+                mFont.setPixelSize(10);
+                painter.setFont(mFont);
                 for(int k=0;k<16;k++)
                 {
                     if(k==0){}
                     else if (k>0 && k<8) description_1+=short_tablica_nazw[k]+"  =  "+tablica_nazw[k]+"     ";
                     else  description_2+=short_tablica_nazw[k]+"  =  "+tablica_nazw[k]+"       ";
                 }
-                painter.drawText(50,50,description_1);
-                painter.drawText(50,70,description_2);
+                painter.drawText(50,60,description_1);
+                painter.drawText(50,80,description_2);
 
 
                 mPen.setWidth(2);
+                mFont.setPixelSize(11);
+                painter.setFont(mFont);
                 painter.setPen(mPen);
 
                if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()>=ui->dateEdit_begin->date() )
@@ -289,10 +316,14 @@ void MainWindow::on_pushButton_3_clicked()
         }
          else
             {
+                mPen.setWidth(3);
+                painter.setPen(mPen);
                if(i==0)
                 {
                 painter.drawText(xpos+i*cell_width+2,ypos+(2+ile_na_stronie)*cell_height-5,"SUMMARY");
                 painter.drawRect(xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
+                painter.drawText(xpos+15*cell_width+5,ypos+(33)*cell_height-5,"page "+QString::number(site_counter+1)//28 bo ilosc +3
+                                                +" of "+QString::number(max_site_counter));
                }
                else if(i==1)
                 {
@@ -325,6 +356,8 @@ void MainWindow::on_pushButton_3_clicked()
                    painter.drawRect(30+xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
                }
 
+               mPen.setWidth(2);
+               painter.setPen(mPen);
             }
 
     }
@@ -346,19 +379,20 @@ void MainWindow::init_table()
     ui->tableWidget->setCellWidget(0,0,mRekord->mDate);
 
     ui->tableWidget->horizontalHeader()->setMinimumHeight(50);
-    ui->tableWidget->setColumnWidth(2,200);
-    ui->tableWidget->setColumnWidth(4,200);
-    ui->tableWidget->setColumnWidth(5,150);
-    ui->tableWidget->setColumnWidth(6,230);
-    ui->tableWidget->setColumnWidth(7,150);
-    ui->tableWidget->setColumnWidth(8,150);
-    ui->tableWidget->setColumnWidth(12,200);
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Data"<<"Tytul"<<"Przelicznik\ngodzinowy\n(praca)"<<"Godziny\n(praca)"
+                                               <<"Przelicznik\nmilażu\nrefundowanego"<<"Milaż\nrefundowany"
+                                               <<"Przelicznik\nmilażu\nnierefundowanego"<<"Milaż\nnierefundowany"
+                                               <<"Przelicznik\nczasu\n(dojazd)"<<"Czas\n(dojazd)"
+                                               <<"Suma\nczasu"<<"Dochod"<<"Przelicznik\ntaxu\ndojazdowego"<<"Tax\ndojazdowy"
+                                               <<"Inne"<<"Zysk");
 
 
-    ui->tableWidget->setColumnWidth(0,80);
-
-    for(int i=0;i<15;i++)
+    for(int i=0;i<16;i++)
     {
+        ui->tableWidget->setColumnWidth(i,73);
+        if(i==0) ui->tableWidget->setColumnWidth(i,85);
+        if(i==4 || i==5 || i==12) ui->tableWidget->setColumnWidth(i,95);
+         if(i==6 || i==7) ui->tableWidget->setColumnWidth(i,110);
         QTableWidgetItem *itm=new QTableWidgetItem;
         itm->setText(NULL);
         if(i+1==10 || i+1==11 || i+1==15 || i+1==13)

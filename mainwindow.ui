@@ -78,6 +78,11 @@
        <property name="text">
         <string>Przelicznik Godzinowy (Praca)</string>
        </property>
+       <property name="font">
+        <font>
+         <kerning>false</kerning>
+        </font>
+       </property>
       </column>
       <column>
        <property name="text">
@@ -106,7 +111,7 @@
       </column>
       <column>
        <property name="text">
-        <string>Przelicznik  Czasu(Dojazd)</string>
+        <string>Przelicznik  Czasu (Dojazd)</string>
        </property>
       </column>
       <column>
