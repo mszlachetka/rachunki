@@ -29,11 +29,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     init_tablica_nazw();
     init_short_tablica_nazw();
+    ui->dateEdit_end->setDate(QDate::currentDate());
 
     init_table();
     init_last_row();
     wczytaj();
     aktualizuj_razem();
+    ui->tableWidget->setColumnHidden(10,true);
+    ui->check_suma_czasu->setHidden(true);
 
 
 }
@@ -52,6 +55,7 @@ void MainWindow::on_pushButton_clicked()
     ui->tableWidget->insertRow(ui->tableWidget->rowCount()-1);
 
     mRekord->mDate->setDate(QDate::currentDate());
+
     ui->tableWidget->setCellWidget(ui->tableWidget->rowCount()-2,0,mRekord->mDate);
 
     for(int i=0;i<15;i++)
@@ -72,7 +76,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    if(ui->tableWidget->currentRow()!=ui->tableWidget->rowCount()-1)
+    if((ui->tableWidget->currentRow()!=ui->tableWidget->rowCount()-1)  && ui->lineEdit->text().isEmpty())
     {
         int previous;
         previous=ui->tableWidget->currentRow();
@@ -152,11 +156,13 @@ void MainWindow::on_pushButton_3_clicked()
         {
             if(j!=ui->tableWidget->rowCount())
             {
-
+                if(!ui->tableWidget->isRowHidden(j-1))
+                {
                 if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()>=ui->dateEdit_begin->date() )
                  {
                      if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(j-1,0))->date()<=ui->dateEdit_end->date() )
                      {
+
 
                 if(wybrane_kolumny.at(i)==3) suma_godzin_kolumna+=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
                 if(wybrane_kolumny.at(i)==5) suma_milaz_refundowany +=ui->tableWidget->item(j-1,wybrane_kolumny.at(i))->text().toDouble();
@@ -185,8 +191,8 @@ void MainWindow::on_pushButton_3_clicked()
             if(ile_na_stronie==30)
             {
                 site_counter++;
-                painter.drawText(xpos+15*cell_width+5,ypos+(3+ile_na_stronie)*cell_height-5,"page "+QString::number(site_counter)
-                                                 +" of "+QString::number(max_site_counter));
+                painter.drawText(xpos+15*cell_width+5,ypos+(3+ile_na_stronie)*cell_height-5,"strona "+QString::number(site_counter)
+                                                 +" z "+QString::number(max_site_counter));
                 printer.newPage();
                 ile_na_stronie=0;
             }
@@ -226,8 +232,9 @@ void MainWindow::on_pushButton_3_clicked()
                 for(int k=0;k<16;k++)
                 {
                     if(k==0){}
-                    else if (k>0 && k<8) description_1+=short_tablica_nazw[k]+"  =  "+tablica_nazw[k]+"     ";
-                    else  description_2+=short_tablica_nazw[k]+"  =  "+tablica_nazw[k]+"       ";
+                    else if (k>0 && k<9) description_1+=short_tablica_nazw[k]+"  =  "+tablica_nazw[k]+"     ";
+                    else if(k!=10) description_2+=short_tablica_nazw[k]+"  =  "+tablica_nazw[k]+"       ";
+                    else description_2+="";
                 }
                 painter.drawText(50,60,description_1);
                 painter.drawText(50,80,description_2);
@@ -312,6 +319,7 @@ void MainWindow::on_pushButton_3_clicked()
 
             }
 
+            }
 
         }
          else
@@ -320,10 +328,10 @@ void MainWindow::on_pushButton_3_clicked()
                 painter.setPen(mPen);
                if(i==0)
                 {
-                painter.drawText(xpos+i*cell_width+2,ypos+(2+ile_na_stronie)*cell_height-5,"SUMMARY");
+                painter.drawText(xpos+i*cell_width+2,ypos+(2+ile_na_stronie)*cell_height-5,"SUMA");
                 painter.drawRect(xpos+i*cell_width,ypos+(1+ile_na_stronie)*cell_height,cell_width,cell_height);
-                painter.drawText(xpos+15*cell_width+5,ypos+(33)*cell_height-5,"page "+QString::number(site_counter+1)//28 bo ilosc +3
-                                                +" of "+QString::number(max_site_counter));
+                painter.drawText(xpos+15*cell_width+5,ypos+(33)*cell_height-5,"strona "+QString::number(site_counter+1)//28 bo ilosc +3
+                                                +" z "+QString::number(max_site_counter));
                }
                else if(i==1)
                 {
@@ -373,26 +381,26 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::init_table()
 {
-    setWindowTitle("Hajsy");
+    setWindowTitle("RACHUNKI");
     Rekord *mRekord= new Rekord;
     mRekord->mDate->setDate(QDate::currentDate());
     ui->tableWidget->setCellWidget(0,0,mRekord->mDate);
 
     ui->tableWidget->horizontalHeader()->setMinimumHeight(50);
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Data"<<"Tytul"<<"Przelicznik\ngodzinowy\n(praca)"<<"Godziny\n(praca)"
-                                               <<"Przelicznik\nmilażu\nrefundowanego"<<"Milaż\nrefundowany"
-                                               <<"Przelicznik\nmilażu\nnierefundowanego"<<"Milaż\nnierefundowany"
-                                               <<"Przelicznik\nczasu\n(dojazd)"<<"Czas\n(dojazd)"
-                                               <<"Suma\nczasu"<<"Dochod"<<"Przelicznik\ntaxu\ndojazdowego"<<"Tax\ndojazdowy"
-                                               <<"Inne"<<"Zysk");
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Data"<<"Tytul"<<"Przelicznik\nfunta\nbrytyjskiego"<<"Ilosc\nfuntow\nbrytyjskich"
+                                               <<"Przelicznik\neuro"<<"Ilosc\neuro"
+                                               <<"Przelicznik\ndolara\namerykanskiego"<<"Ilosc\ndolarow\namerykanskich"
+                                               <<"Przelicznik\ninnych\nwalut"<<"Ilosc\ninnych\nwalut"
+                                               <<"Suma\nczasu"<<"Pieniadze\nw obcych\nwalutach"<<"Przelicznik\npracy\nzarobkowej"<<"Dochód\nz pracy\nzarobkowej"
+                                               <<"Inne\npieniadze\nw zlotych\npolskich"<<"Wszystkie\ndostepne\nsrodki");
 
 
     for(int i=0;i<16;i++)
     {
-        ui->tableWidget->setColumnWidth(i,73);
-        if(i==0) ui->tableWidget->setColumnWidth(i,85);
-        if(i==4 || i==5 || i==12) ui->tableWidget->setColumnWidth(i,95);
-         if(i==6 || i==7) ui->tableWidget->setColumnWidth(i,110);
+        ui->tableWidget->setColumnWidth(i,80);
+        if(i==0) ui->tableWidget->setColumnWidth(i,91);
+        if(i==4 || i==5 || i==12) ui->tableWidget->setColumnWidth(i,96);
+         if(i==6 || i==7) ui->tableWidget->setColumnWidth(i,111);
         QTableWidgetItem *itm=new QTableWidgetItem;
         itm->setText(NULL);
         if(i+1==10 || i+1==11 || i+1==15 || i+1==13)
@@ -440,39 +448,40 @@ void MainWindow::on_pushButton_4_clicked()
 
 
 
-
+    for(int j=0;j<ui->tableWidget->rowCount()-1;j++)
+    {
     QString s_suma_godzin;
-    suma_godzin=ui->tableWidget->item(ui->tableWidget->currentRow(),3)->text().toDouble()
-            +ui->tableWidget->item(ui->tableWidget->currentRow(),9)->text().toDouble();
+    suma_godzin=ui->tableWidget->item(j,3)->text().toDouble()
+            +ui->tableWidget->item(j,9)->text().toDouble();
     s_suma_godzin=QString::number(suma_godzin);
-    ui->tableWidget->item(ui->tableWidget->currentRow(),10)->setText(s_suma_godzin);
+    ui->tableWidget->item(j,10)->setText(s_suma_godzin);
 
     //dochod suma
     double suma_dochodu=0;
     QString s_suma_dochodu;
-    suma_dochodu=ui->tableWidget->item(ui->tableWidget->currentRow(),2)->text().toDouble()*ui->tableWidget->item(ui->tableWidget->currentRow(),3)->text().toDouble()
-            +ui->tableWidget->item(ui->tableWidget->currentRow(),4)->text().toDouble()*ui->tableWidget->item(ui->tableWidget->currentRow(),5)->text().toDouble()
-            +ui->tableWidget->item(ui->tableWidget->currentRow(),8)->text().toDouble()*ui->tableWidget->item(ui->tableWidget->currentRow(),9)->text().toDouble();
+    suma_dochodu=ui->tableWidget->item(j,2)->text().toDouble()*ui->tableWidget->item(j,3)->text().toDouble()
+            +ui->tableWidget->item(j,4)->text().toDouble()*ui->tableWidget->item(j,5)->text().toDouble()
+            +ui->tableWidget->item(j,8)->text().toDouble()*ui->tableWidget->item(j,9)->text().toDouble();
 
     s_suma_dochodu=QString::number(suma_dochodu);
-    ui->tableWidget->item(ui->tableWidget->currentRow(),11)->setText(s_suma_dochodu);
+    ui->tableWidget->item(j,11)->setText(s_suma_dochodu);
 
     //zysk suma
     double suma_zysk=0;
-    suma_zysk=suma_dochodu+ui->tableWidget->item(ui->tableWidget->currentRow(),14)->text().toDouble();
+    suma_zysk=suma_dochodu+ui->tableWidget->item(j,14)->text().toDouble();
     QString s_suma_zysk;
     s_suma_zysk=QString::number(suma_zysk);
-    ui->tableWidget->item(ui->tableWidget->currentRow(),15)->setText(s_suma_zysk);
+    ui->tableWidget->item(j,15)->setText(s_suma_zysk);
 
     //tax dojazdowy
     double suma_tax=0;
-    suma_tax=(ui->tableWidget->item(ui->tableWidget->currentRow(),5)->text().toDouble()
-              +ui->tableWidget->item(ui->tableWidget->currentRow(),7)->text().toDouble())
-            *ui->tableWidget->item(ui->tableWidget->currentRow(),12)->text().toDouble();
+    suma_tax=(ui->tableWidget->item(j,5)->text().toDouble()
+              +ui->tableWidget->item(j,7)->text().toDouble())
+            *ui->tableWidget->item(j,12)->text().toDouble();
     QString s_suma_tax;
     s_suma_tax=QString::number(suma_tax);
-    ui->tableWidget->item(ui->tableWidget->currentRow(),13)->setText(s_suma_tax);
-
+    ui->tableWidget->item(j,13)->setText(s_suma_tax);
+    }
     //razem
     sortuj();
     aktualizuj_razem();
@@ -505,6 +514,23 @@ void MainWindow::aktualizuj_razem()
     double suma_inne=0;
     double suma_tax=0;
 
+    int column=ui->tableWidget->currentColumn();
+    int row=ui->tableWidget->currentRow();
+    for(int i=0;i<ui->tableWidget->rowCount()-1;i++)
+    {
+        if(!ui->tableWidget->isRowHidden(i))
+        {
+       if((column==2 || column==4 || column==6) && !ui->tableWidget->item(row,column)->text().isEmpty()
+                                                    && ui->tableWidget->item(row,column)->text().toDouble()!=0)
+    {
+    ui->tableWidget->item(i,2)->setText(ui->tableWidget->item(row,2)->text());
+     ui->tableWidget->item(i,4)->setText(ui->tableWidget->item(row,4)->text());
+   ui->tableWidget->item(i,6)->setText(ui->tableWidget->item(row,6)->text());
+       }
+    }
+    }
+
+
     for(int i=1;i<16;i++)
     {
         if(row_ready.at(ui->tableWidget->currentRow()) && (ui->tableWidget->item(ui->tableWidget->currentRow(),i)->text().isNull() ||
@@ -514,8 +540,8 @@ void MainWindow::aktualizuj_razem()
     for(int j=0;j<ui->tableWidget->rowCount()-1;j++)
     {
 
-
-
+        if(!ui->tableWidget->isRowHidden(j))
+        {
         ui->tableWidget->item(ui->tableWidget->rowCount()-1,3)
                 ->setText(QString::number(suma_godzin_kolumna+=ui->tableWidget->item(j,3)->text().toDouble()));
 
@@ -544,7 +570,7 @@ void MainWindow::aktualizuj_razem()
                 ->setText(QString::number(suma_inne+=ui->tableWidget->item(j,14)->text().toDouble()));
 
 
-
+}
     }
 
 }
@@ -663,41 +689,41 @@ void MainWindow::wczytaj()
 void MainWindow::init_tablica_nazw()
 {
     tablica_nazw[0]="";
-    tablica_nazw[1]="title";
-    tablica_nazw[2]="job_hourly_rate";
-    tablica_nazw[3]="job_hours";
-    tablica_nazw[4]="rechargable_milage_rate";
-    tablica_nazw[5]="rechargable_milage";
-    tablica_nazw[6]="non_rechargable_milage_rate";
-    tablica_nazw[7]="non_rechargable_milage";
-    tablica_nazw[8]="commuting_rate";
-    tablica_nazw[9]="commuting_hours";
-    tablica_nazw[10]="hours_total";
-    tablica_nazw[11]="income";
-    tablica_nazw[12]="milage_allowance_rate";
-    tablica_nazw[13]="milage_allowance";
-    tablica_nazw[14]="others";
-    tablica_nazw[15]="gain";
+    tablica_nazw[1]="tytul";
+    tablica_nazw[2]="przel_funt_brytyjski";
+    tablica_nazw[3]="ilosc_funt_brytyjski";
+    tablica_nazw[4]="przel_euro";
+    tablica_nazw[5]="ilosc_euro";
+    tablica_nazw[6]="przel_dolara_amerykanskiego";
+    tablica_nazw[7]="ilosc_dolarow_amerykanskich";
+    tablica_nazw[8]="przel_innej_waluty";
+    tablica_nazw[9]="ilosc_innej_waluty";
+    tablica_nazw[10]="scisle_tajne";
+    tablica_nazw[11]="pieniadze_obce";
+    tablica_nazw[12]="przel_pracy_zarobkowej";
+    tablica_nazw[13]="dochod_z_pracy_zarobkowej";
+    tablica_nazw[14]="inne_pieniadze_w_zlotowkach";
+    tablica_nazw[15]="wszystkie_dostepne_srodki";
 }
 
 void MainWindow::init_short_tablica_nazw()
 {
-    short_tablica_nazw[0]="date";
-    short_tablica_nazw[1]="T";
-    short_tablica_nazw[2]="JHR";
-    short_tablica_nazw[3]="JH";
-    short_tablica_nazw[4]="RMR";
-    short_tablica_nazw[5]="RM";
-    short_tablica_nazw[6]="NRMR";
-    short_tablica_nazw[7]="NRM";
-    short_tablica_nazw[8]="CR";
-    short_tablica_nazw[9]="CH";
-    short_tablica_nazw[10]="HT";
-    short_tablica_nazw[11]="INC";
-    short_tablica_nazw[12]="MAR";
-    short_tablica_nazw[13]="MA";
-    short_tablica_nazw[14]="O";
-    short_tablica_nazw[15]="G";
+    short_tablica_nazw[0]="data";
+    short_tablica_nazw[1]="tytul";
+    short_tablica_nazw[2]="PFB";
+    short_tablica_nazw[3]="IFB";
+    short_tablica_nazw[4]="PE";
+    short_tablica_nazw[5]="IE";
+    short_tablica_nazw[6]="PDA";
+    short_tablica_nazw[7]="IDA";
+    short_tablica_nazw[8]="PIW";
+    short_tablica_nazw[9]="IIW";
+    short_tablica_nazw[10]="tajne";
+    short_tablica_nazw[11]="PO";
+    short_tablica_nazw[12]="PPZ";
+    short_tablica_nazw[13]="DPZ";
+    short_tablica_nazw[14]="IPZ";
+    short_tablica_nazw[15]="WDS";
 }
 
 void MainWindow::on_tableWidget_cellChanged(int row, int column)
@@ -845,3 +871,28 @@ int MainWindow::licz_okejki(double &i)
     return i;
 }
 
+
+
+
+
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    for(int i=1;i<ui->tableWidget->rowCount();i++)
+    {
+        if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(i-1,0))->date()>=ui->dateEdit_begin->date() )
+         {
+             if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(i-1,0))->date()<=ui->dateEdit_end->date() )
+             {
+               if(ui->tableWidget->item(i-1,1)->text().contains(ui->lineEdit->text()))
+               {
+                   ui->tableWidget->setRowHidden(i-1,false);
+               }
+               else ui->tableWidget->setRowHidden(i-1,true);
+             }
+             else ui->tableWidget->setRowHidden(i-1,true);
+        }
+        else ui->tableWidget->setRowHidden(i-1,true);
+    }
+    aktualizuj_razem();
+}

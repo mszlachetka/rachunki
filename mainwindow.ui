@@ -28,7 +28,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
+    <item row="0" column="0">
      <widget class="QTableWidget" name="tableWidget">
       <property name="enabled">
        <bool>true</bool>
@@ -151,7 +151,7 @@
       </column>
      </widget>
     </item>
-    <item row="1" column="0" colspan="2">
+    <item row="1" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -185,12 +185,12 @@
          <widget class="QCheckBox" name="check_przelicznik_godzinowy">
           <property name="maximumSize">
            <size>
-            <width>130</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>przelicznik godzinowy</string>
+           <string>przel funt brytyjski</string>
           </property>
          </widget>
         </item>
@@ -198,12 +198,12 @@
          <widget class="QCheckBox" name="check_godziny">
           <property name="maximumSize">
            <size>
-            <width>70</width>
+            <width>90</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>godziny</string>
+           <string>ilosc funtow</string>
           </property>
          </widget>
         </item>
@@ -211,12 +211,12 @@
          <widget class="QCheckBox" name="check_przelicznik_milazu_refundowanego">
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>80</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>przelicznik milażu refundowanego</string>
+           <string>przel euro</string>
           </property>
          </widget>
         </item>
@@ -224,19 +224,38 @@
          <widget class="QCheckBox" name="check_milaz_refundowany">
           <property name="maximumSize">
            <size>
-            <width>120</width>
+            <width>80</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>milaż refundowany</string>
+           <string>ilosc euro</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="check_przelicznik_milazu_nierefundowanego">
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>przelicznik milażu nierefundowanego</string>
+           <string>przel dolara amerykanskiego</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_milaz_nierefundowany">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>ilosc dolarow amerykanskich</string>
           </property>
          </widget>
         </item>
@@ -245,28 +264,15 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QCheckBox" name="check_milaz_nierefundowany">
-          <property name="maximumSize">
-           <size>
-            <width>130</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>milaż nierefundowany</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QCheckBox" name="check_przelicznik_czasu">
           <property name="maximumSize">
            <size>
-            <width>100</width>
+            <width>110</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>przelicznik czasu</string>
+           <string>przel innej waluty</string>
           </property>
          </widget>
         </item>
@@ -274,12 +280,12 @@
          <widget class="QCheckBox" name="check_czas">
           <property name="maximumSize">
            <size>
-            <width>40</width>
+            <width>105</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>czas</string>
+           <string>ilosc innej waluty</string>
           </property>
          </widget>
         </item>
@@ -300,12 +306,12 @@
          <widget class="QCheckBox" name="check_dochod">
           <property name="maximumSize">
            <size>
-            <width>60</width>
+            <width>170</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>dochód</string>
+           <string>pieniadze w obcych walutach</string>
           </property>
          </widget>
         </item>
@@ -313,12 +319,12 @@
          <widget class="QCheckBox" name="check_przelicznik_taxu_dojazdowego">
           <property name="maximumSize">
            <size>
-            <width>160</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>przelicznik taxu dojazdowego</string>
+           <string>przel pracy zarobkowej</string>
           </property>
          </widget>
         </item>
@@ -326,12 +332,12 @@
          <widget class="QCheckBox" name="check_tax_dojazdowy">
           <property name="maximumSize">
            <size>
-            <width>100</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>tax dojazdowy</string>
+           <string>dochod z pracy zarobkowej</string>
           </property>
          </widget>
         </item>
@@ -339,19 +345,25 @@
          <widget class="QCheckBox" name="check_inne">
           <property name="maximumSize">
            <size>
-            <width>50</width>
+            <width>180</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>inne</string>
+           <string>inne pieniadze w zlotych polskich</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="check_zysk">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>zysk</string>
+           <string>wszystkie dostepne srodki</string>
           </property>
          </widget>
         </item>
@@ -359,100 +371,133 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0" colspan="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item row="2" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <layout class="QFormLayout" name="formLayout">
-        <property name="fieldGrowthPolicy">
-         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-        </property>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Od kiedy</string>
-          </property>
-          <property name="buddy">
-           <cstring>dateEdit_begin</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QDateEdit" name="dateEdit_begin"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Do kiedy</string>
-          </property>
-          <property name="buddy">
-           <cstring>dateEdit_end</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QDateEdit" name="dateEdit_end"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QPushButton" name="pushButton">
-          <property name="text">
-           <string>Dodaj wpis</string>
+         <layout class="QFormLayout" name="formLayout">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
           </property>
-          <property name="autoRepeat">
-           <bool>false</bool>
-          </property>
-          <property name="autoRepeatDelay">
-           <number>1</number>
-          </property>
-         </widget>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Od kiedy</string>
+            </property>
+            <property name="buddy">
+             <cstring>dateEdit_begin</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDateEdit" name="dateEdit_begin"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Do kiedy</string>
+            </property>
+            <property name="buddy">
+             <cstring>dateEdit_end</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDateEdit" name="dateEdit_end"/>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="text">
-           <string>Aktualizuj</string>
-          </property>
-          <property name="shortcut">
-           <string>Space</string>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="text">
+               <string>Dodaj wpis</string>
+              </property>
+              <property name="autoRepeat">
+               <bool>false</bool>
+              </property>
+              <property name="autoRepeatDelay">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="text">
+               <string>Usun wpis</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_4">
+            <property name="text">
+             <string>Aktualizuj</string>
+            </property>
+            <property name="shortcut">
+             <string>Space</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>Usun wpis</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Do wyszukania</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_5">
+            <property name="text">
+             <string>Wyszukaj</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
-          <property name="text">
-           <string>Eksportuj do pdf</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Nagłówek pliku pdf</string>
+            </property>
+            <property name="buddy">
+             <cstring>linia_tytulowa</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="linia_tytulowa"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="text">
+             <string>Eksportuj do pdf</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>
      </layout>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Nagłówek pliku pdf</string>
-      </property>
-      <property name="buddy">
-       <cstring>linia_tytulowa</cstring>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="linia_tytulowa"/>
     </item>
    </layout>
   </widget>

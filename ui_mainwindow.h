@@ -48,8 +48,8 @@ public:
     QCheckBox *check_przelicznik_milazu_refundowanego;
     QCheckBox *check_milaz_refundowany;
     QCheckBox *check_przelicznik_milazu_nierefundowanego;
-    QHBoxLayout *horizontalLayout_2;
     QCheckBox *check_milaz_nierefundowany;
+    QHBoxLayout *horizontalLayout_2;
     QCheckBox *check_przelicznik_czasu;
     QCheckBox *check_czas;
     QCheckBox *check_suma_czasu;
@@ -58,20 +58,27 @@ public:
     QCheckBox *check_tax_dojazdowy;
     QCheckBox *check_inne;
     QCheckBox *check_zysk;
-    QHBoxLayout *horizontalLayout_3;
+    QVBoxLayout *verticalLayout_4;
+    QHBoxLayout *horizontalLayout_6;
     QFormLayout *formLayout;
     QLabel *label;
     QDateEdit *dateEdit_begin;
     QLabel *label_2;
     QDateEdit *dateEdit_end;
     QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_5;
     QPushButton *pushButton;
+    QPushButton *pushButton_2;
     QPushButton *pushButton_4;
     QVBoxLayout *verticalLayout_3;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_4;
+    QLineEdit *lineEdit;
+    QPushButton *pushButton_5;
+    QHBoxLayout *horizontalLayout_4;
     QLabel *label_3;
     QLineEdit *linia_tytulowa;
+    QPushButton *pushButton_3;
     QMenuBar *menuBar;
     QMenu *menuHELP;
     QStatusBar *statusBar;
@@ -153,7 +160,7 @@ public:
         tableWidget->setRowCount(1);
         tableWidget->horizontalHeader()->setCascadingSectionResizes(true);
 
-        gridLayout->addWidget(tableWidget, 0, 0, 1, 2);
+        gridLayout->addWidget(tableWidget, 0, 0, 1, 1);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
@@ -175,32 +182,39 @@ public:
 
         check_przelicznik_godzinowy = new QCheckBox(centralWidget);
         check_przelicznik_godzinowy->setObjectName(QStringLiteral("check_przelicznik_godzinowy"));
-        check_przelicznik_godzinowy->setMaximumSize(QSize(130, 16777215));
+        check_przelicznik_godzinowy->setMaximumSize(QSize(120, 16777215));
 
         horizontalLayout->addWidget(check_przelicznik_godzinowy);
 
         check_godziny = new QCheckBox(centralWidget);
         check_godziny->setObjectName(QStringLiteral("check_godziny"));
-        check_godziny->setMaximumSize(QSize(70, 16777215));
+        check_godziny->setMaximumSize(QSize(90, 16777215));
 
         horizontalLayout->addWidget(check_godziny);
 
         check_przelicznik_milazu_refundowanego = new QCheckBox(centralWidget);
         check_przelicznik_milazu_refundowanego->setObjectName(QStringLiteral("check_przelicznik_milazu_refundowanego"));
-        check_przelicznik_milazu_refundowanego->setMaximumSize(QSize(180, 16777215));
+        check_przelicznik_milazu_refundowanego->setMaximumSize(QSize(80, 16777215));
 
         horizontalLayout->addWidget(check_przelicznik_milazu_refundowanego);
 
         check_milaz_refundowany = new QCheckBox(centralWidget);
         check_milaz_refundowany->setObjectName(QStringLiteral("check_milaz_refundowany"));
-        check_milaz_refundowany->setMaximumSize(QSize(120, 16777215));
+        check_milaz_refundowany->setMaximumSize(QSize(80, 16777215));
 
         horizontalLayout->addWidget(check_milaz_refundowany);
 
         check_przelicznik_milazu_nierefundowanego = new QCheckBox(centralWidget);
         check_przelicznik_milazu_nierefundowanego->setObjectName(QStringLiteral("check_przelicznik_milazu_nierefundowanego"));
+        check_przelicznik_milazu_nierefundowanego->setMaximumSize(QSize(160, 16777215));
 
         horizontalLayout->addWidget(check_przelicznik_milazu_nierefundowanego);
+
+        check_milaz_nierefundowany = new QCheckBox(centralWidget);
+        check_milaz_nierefundowany->setObjectName(QStringLiteral("check_milaz_nierefundowany"));
+        check_milaz_nierefundowany->setMaximumSize(QSize(16777215, 16777215));
+
+        horizontalLayout->addWidget(check_milaz_nierefundowany);
 
 
         verticalLayout->addLayout(horizontalLayout);
@@ -208,21 +222,15 @@ public:
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        check_milaz_nierefundowany = new QCheckBox(centralWidget);
-        check_milaz_nierefundowany->setObjectName(QStringLiteral("check_milaz_nierefundowany"));
-        check_milaz_nierefundowany->setMaximumSize(QSize(130, 16777215));
-
-        horizontalLayout_2->addWidget(check_milaz_nierefundowany);
-
         check_przelicznik_czasu = new QCheckBox(centralWidget);
         check_przelicznik_czasu->setObjectName(QStringLiteral("check_przelicznik_czasu"));
-        check_przelicznik_czasu->setMaximumSize(QSize(100, 16777215));
+        check_przelicznik_czasu->setMaximumSize(QSize(110, 16777215));
 
         horizontalLayout_2->addWidget(check_przelicznik_czasu);
 
         check_czas = new QCheckBox(centralWidget);
         check_czas->setObjectName(QStringLiteral("check_czas"));
-        check_czas->setMaximumSize(QSize(40, 16777215));
+        check_czas->setMaximumSize(QSize(105, 16777215));
 
         horizontalLayout_2->addWidget(check_czas);
 
@@ -234,30 +242,31 @@ public:
 
         check_dochod = new QCheckBox(centralWidget);
         check_dochod->setObjectName(QStringLiteral("check_dochod"));
-        check_dochod->setMaximumSize(QSize(60, 16777215));
+        check_dochod->setMaximumSize(QSize(170, 16777215));
 
         horizontalLayout_2->addWidget(check_dochod);
 
         check_przelicznik_taxu_dojazdowego = new QCheckBox(centralWidget);
         check_przelicznik_taxu_dojazdowego->setObjectName(QStringLiteral("check_przelicznik_taxu_dojazdowego"));
-        check_przelicznik_taxu_dojazdowego->setMaximumSize(QSize(160, 16777215));
+        check_przelicznik_taxu_dojazdowego->setMaximumSize(QSize(150, 16777215));
 
         horizontalLayout_2->addWidget(check_przelicznik_taxu_dojazdowego);
 
         check_tax_dojazdowy = new QCheckBox(centralWidget);
         check_tax_dojazdowy->setObjectName(QStringLiteral("check_tax_dojazdowy"));
-        check_tax_dojazdowy->setMaximumSize(QSize(100, 16777215));
+        check_tax_dojazdowy->setMaximumSize(QSize(150, 16777215));
 
         horizontalLayout_2->addWidget(check_tax_dojazdowy);
 
         check_inne = new QCheckBox(centralWidget);
         check_inne->setObjectName(QStringLiteral("check_inne"));
-        check_inne->setMaximumSize(QSize(50, 16777215));
+        check_inne->setMaximumSize(QSize(180, 16777215));
 
         horizontalLayout_2->addWidget(check_inne);
 
         check_zysk = new QCheckBox(centralWidget);
         check_zysk->setObjectName(QStringLiteral("check_zysk"));
+        check_zysk->setMaximumSize(QSize(16777215, 16777215));
 
         horizontalLayout_2->addWidget(check_zysk);
 
@@ -265,11 +274,14 @@ public:
         verticalLayout->addLayout(horizontalLayout_2);
 
 
-        gridLayout->addLayout(verticalLayout, 1, 0, 1, 2);
+        gridLayout->addLayout(verticalLayout, 1, 0, 1, 1);
 
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
         formLayout = new QFormLayout();
         formLayout->setSpacing(6);
         formLayout->setObjectName(QStringLiteral("formLayout"));
@@ -295,17 +307,28 @@ public:
         formLayout->setWidget(1, QFormLayout::FieldRole, dateEdit_end);
 
 
-        horizontalLayout_3->addLayout(formLayout);
+        horizontalLayout_6->addLayout(formLayout);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setAutoRepeat(false);
         pushButton->setAutoRepeatDelay(1);
 
-        verticalLayout_2->addWidget(pushButton);
+        horizontalLayout_5->addWidget(pushButton);
+
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+
+        horizontalLayout_5->addWidget(pushButton_2);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_5);
 
         pushButton_4 = new QPushButton(centralWidget);
         pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
@@ -313,36 +336,61 @@ public:
         verticalLayout_2->addWidget(pushButton_4);
 
 
-        horizontalLayout_3->addLayout(verticalLayout_2);
+        horizontalLayout_6->addLayout(verticalLayout_2);
+
+
+        verticalLayout_4->addLayout(horizontalLayout_6);
 
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        label_4 = new QLabel(centralWidget);
+        label_4->setObjectName(QStringLiteral("label_4"));
 
-        verticalLayout_3->addWidget(pushButton_2);
+        horizontalLayout_3->addWidget(label_4);
 
-        pushButton_3 = new QPushButton(centralWidget);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        lineEdit = new QLineEdit(centralWidget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
 
-        verticalLayout_3->addWidget(pushButton_3);
+        horizontalLayout_3->addWidget(lineEdit);
+
+        pushButton_5 = new QPushButton(centralWidget);
+        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
+
+        horizontalLayout_3->addWidget(pushButton_5);
 
 
-        horizontalLayout_3->addLayout(verticalLayout_3);
+        verticalLayout_3->addLayout(horizontalLayout_3);
 
-
-        gridLayout->addLayout(horizontalLayout_3, 2, 0, 1, 2);
-
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QStringLiteral("label_3"));
 
-        gridLayout->addWidget(label_3, 3, 0, 1, 1);
+        horizontalLayout_4->addWidget(label_3);
 
         linia_tytulowa = new QLineEdit(centralWidget);
         linia_tytulowa->setObjectName(QStringLiteral("linia_tytulowa"));
 
-        gridLayout->addWidget(linia_tytulowa, 3, 1, 1, 1);
+        horizontalLayout_4->addWidget(linia_tytulowa);
+
+        pushButton_3 = new QPushButton(centralWidget);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+
+        horizontalLayout_4->addWidget(pushButton_3);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_4);
+
+
+        verticalLayout_4->addLayout(verticalLayout_3);
+
+
+        gridLayout->addLayout(verticalLayout_4, 2, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -406,28 +454,30 @@ public:
         ___qtablewidgetitem15->setText(QApplication::translate("MainWindow", "Zysk", 0));
         check_data->setText(QApplication::translate("MainWindow", "data", 0));
         chec_tytul->setText(QApplication::translate("MainWindow", "tytu\305\202", 0));
-        check_przelicznik_godzinowy->setText(QApplication::translate("MainWindow", "przelicznik godzinowy", 0));
-        check_godziny->setText(QApplication::translate("MainWindow", "godziny", 0));
-        check_przelicznik_milazu_refundowanego->setText(QApplication::translate("MainWindow", "przelicznik mila\305\274u refundowanego", 0));
-        check_milaz_refundowany->setText(QApplication::translate("MainWindow", "mila\305\274 refundowany", 0));
-        check_przelicznik_milazu_nierefundowanego->setText(QApplication::translate("MainWindow", "przelicznik mila\305\274u nierefundowanego", 0));
-        check_milaz_nierefundowany->setText(QApplication::translate("MainWindow", "mila\305\274 nierefundowany", 0));
-        check_przelicznik_czasu->setText(QApplication::translate("MainWindow", "przelicznik czasu", 0));
-        check_czas->setText(QApplication::translate("MainWindow", "czas", 0));
+        check_przelicznik_godzinowy->setText(QApplication::translate("MainWindow", "przel funt brytyjski", 0));
+        check_godziny->setText(QApplication::translate("MainWindow", "ilosc funtow", 0));
+        check_przelicznik_milazu_refundowanego->setText(QApplication::translate("MainWindow", "przel euro", 0));
+        check_milaz_refundowany->setText(QApplication::translate("MainWindow", "ilosc euro", 0));
+        check_przelicznik_milazu_nierefundowanego->setText(QApplication::translate("MainWindow", "przel dolara amerykanskiego", 0));
+        check_milaz_nierefundowany->setText(QApplication::translate("MainWindow", "ilosc dolarow amerykanskich", 0));
+        check_przelicznik_czasu->setText(QApplication::translate("MainWindow", "przel innej waluty", 0));
+        check_czas->setText(QApplication::translate("MainWindow", "ilosc innej waluty", 0));
         check_suma_czasu->setText(QApplication::translate("MainWindow", "suma czasu", 0));
-        check_dochod->setText(QApplication::translate("MainWindow", "doch\303\263d", 0));
-        check_przelicznik_taxu_dojazdowego->setText(QApplication::translate("MainWindow", "przelicznik taxu dojazdowego", 0));
-        check_tax_dojazdowy->setText(QApplication::translate("MainWindow", "tax dojazdowy", 0));
-        check_inne->setText(QApplication::translate("MainWindow", "inne", 0));
-        check_zysk->setText(QApplication::translate("MainWindow", "zysk", 0));
+        check_dochod->setText(QApplication::translate("MainWindow", "pieniadze w obcych walutach", 0));
+        check_przelicznik_taxu_dojazdowego->setText(QApplication::translate("MainWindow", "przel pracy zarobkowej", 0));
+        check_tax_dojazdowy->setText(QApplication::translate("MainWindow", "dochod z pracy zarobkowej", 0));
+        check_inne->setText(QApplication::translate("MainWindow", "inne pieniadze w zlotych polskich", 0));
+        check_zysk->setText(QApplication::translate("MainWindow", "wszystkie dostepne srodki", 0));
         label->setText(QApplication::translate("MainWindow", "Od kiedy", 0));
         label_2->setText(QApplication::translate("MainWindow", "Do kiedy", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Dodaj wpis", 0));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Usun wpis", 0));
         pushButton_4->setText(QApplication::translate("MainWindow", "Aktualizuj", 0));
         pushButton_4->setShortcut(QApplication::translate("MainWindow", "Space", 0));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Usun wpis", 0));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Eksportuj do pdf", 0));
+        label_4->setText(QApplication::translate("MainWindow", "Do wyszukania", 0));
+        pushButton_5->setText(QApplication::translate("MainWindow", "Wyszukaj", 0));
         label_3->setText(QApplication::translate("MainWindow", "Nag\305\202\303\263wek pliku pdf", 0));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Eksportuj do pdf", 0));
         menuHELP->setTitle(QApplication::translate("MainWindow", "HELP", 0));
     } // retranslateUi
 
