@@ -8,7 +8,7 @@
 #include <iostream>
 #include <QPrinter>
 #include <QPainter>
-#include <QDir>
+
 
 
 
@@ -76,20 +76,28 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    if((ui->tableWidget->currentRow()!=ui->tableWidget->rowCount()-1)  && ui->lineEdit->text().isEmpty())
-    {
-        int previous;
-        previous=ui->tableWidget->currentRow();
-        ui->tableWidget->removeRow(ui->tableWidget->currentRow());
+int previous;
+    if((ui->tableWidget->currentRow()!=ui->tableWidget->rowCount()-1))
+   {
 
-        if(previous>=ui->tableWidget->rowCount()-1) ui->tableWidget->selectRow(ui->tableWidget->rowCount());
-        else ui->tableWidget->selectRow(previous);
-        row_ready.pop_back();
-        aktualizuj_razem();
-    }
+   previous=ui->tableWidget->currentRow();
+   ui->tableWidget->removeRow(ui->tableWidget->currentRow());
+       do {
 
 
+         ui->tableWidget->selectRow(previous);
+         previous++;
+
+
+
+         } while(ui->tableWidget->isRowHidden(ui->tableWidget->currentRow()));
+ if(previous==ui->tableWidget->rowCount()-1) previous--;
+
+   row_ready.pop_back();
+   aktualizuj_razem();
+   }
 }
+
 
 
 
@@ -145,9 +153,14 @@ void MainWindow::on_pushButton_3_clicked()
 
     int site_counter=0;
         int max_site_counter=0;
+        int nieukryte=0;
+        for(int i=0;i<ui->tableWidget->rowCount();i++)
+        {
+            if(!ui->tableWidget->isRowHidden(i)) nieukryte++;
+        }
 
-        max_site_counter=(((ui->tableWidget->rowCount()+1)-(ui->tableWidget->rowCount()+1)%30))/30;
-        if((ui->tableWidget->rowCount()+2)%30!=0) max_site_counter++;
+        max_site_counter=(((nieukryte+1)-(nieukryte+1)%30))/30;
+        if((nieukryte+2)%30!=0) max_site_counter++;
 
     for(int j=1;j<=ui->tableWidget->rowCount();j++)
     {
@@ -397,10 +410,10 @@ void MainWindow::init_table()
 
     for(int i=0;i<16;i++)
     {
-        ui->tableWidget->setColumnWidth(i,80);
-        if(i==0) ui->tableWidget->setColumnWidth(i,91);
+        ui->tableWidget->setColumnWidth(i,78);
+        if(i==0) ui->tableWidget->setColumnWidth(i,94);
         if(i==4 || i==5 || i==12) ui->tableWidget->setColumnWidth(i,96);
-         if(i==6 || i==7) ui->tableWidget->setColumnWidth(i,111);
+         if(i==6 || i==7) ui->tableWidget->setColumnWidth(i,106);
         QTableWidgetItem *itm=new QTableWidgetItem;
         itm->setText(NULL);
         if(i+1==10 || i+1==11 || i+1==15 || i+1==13)
@@ -730,7 +743,11 @@ void MainWindow::on_tableWidget_cellChanged(int row, int column)
 {
     if(ui->tableWidget->item(row,column)->text().toDouble()<0) ui->tableWidget->item(row,column)->setTextColor(Qt::red);
     else ui->tableWidget->item(row,column)->setTextColor(Qt::black);
-
+    if(column!=1 && column!=0)
+    {
+    QString mValue=QString::number(ui->tableWidget->item(row,column)->text().toDouble(),'f',2);
+    ui->tableWidget->item(row,column)->setText(mValue);
+    }
 }
 
 
@@ -878,13 +895,19 @@ int MainWindow::licz_okejki(double &i)
 
 void MainWindow::on_pushButton_5_clicked()
 {
+   wyszukaj(ui->lineEdit->text());
+    aktualizuj_razem();
+}
+
+void MainWindow::wyszukaj(QString mString)
+{
     for(int i=1;i<ui->tableWidget->rowCount();i++)
     {
         if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(i-1,0))->date()>=ui->dateEdit_begin->date() )
          {
              if(static_cast<QDateEdit*>(ui->tableWidget->cellWidget(i-1,0))->date()<=ui->dateEdit_end->date() )
              {
-               if(ui->tableWidget->item(i-1,1)->text().contains(ui->lineEdit->text()))
+               if(ui->tableWidget->item(i-1,1)->text().contains(mString))
                {
                    ui->tableWidget->setRowHidden(i-1,false);
                }
@@ -894,5 +917,10 @@ void MainWindow::on_pushButton_5_clicked()
         }
         else ui->tableWidget->setRowHidden(i-1,true);
     }
-    aktualizuj_razem();
+}
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    wyszukaj(ui->lineEdit->text());
+     aktualizuj_razem();
 }

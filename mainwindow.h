@@ -25,7 +25,7 @@ public:
 private slots:
 
    void on_pushButton_clicked();
-
+void wyszukaj(QString);
    void on_pushButton_2_clicked();
 
    void init_table();
@@ -61,6 +61,8 @@ private slots:
 
 
     void on_pushButton_5_clicked();
+
+    void on_lineEdit_returnPressed();
 
 private:
     Ui::MainWindow *ui;
